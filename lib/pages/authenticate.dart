@@ -16,7 +16,8 @@ class AuthWrapperState extends State<AuthWrapper> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Provider.of<AuthUserModel>(context).user,
+      stream:
+          Provider.of<AuthUserModel>(context).credentials.authStateChanges(),
       builder: (context, AsyncSnapshot<User?> snapshot) {
         if (snapshot.hasData) {
           return const HomePage();

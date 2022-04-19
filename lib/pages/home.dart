@@ -1,10 +1,7 @@
-import 'package:blood_bank_master/pages/about.dart';
-import 'package:blood_bank_master/pages/faq.dart';
-import 'package:blood_bank_master/pages/donors.dart';
-import 'package:blood_bank_master/pages/profile.dart';
-import 'package:blood_bank_master/pages/sigin.dart';
+import 'package:blood_bank_master/providers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,23 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _items = [
-    {
-      'title': 'Total Donations',
-      'value': 2,
-    },
-    {
-      'title': 'Last Donated',
-      'value': '12/02/2022',
-    },
-    {
-      'title': 'Next Available Donation (Days)',
-      'value': 114,
-    },
-  ];
-
-  Future _refresh() async =>
-      await Future.delayed(Duration(seconds: 3), () => true);
+  var firestore = FirebaseFirestore.instance.collection('achievements');
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +28,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      backgroundColor: Colors.redAccent,
       appBar: AppBar(
         title: const Text(
           'Home',
@@ -58,57 +40,94 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.red,
         centerTitle: true,
       ),
-      body: Container(
-        height: double.maxFinite,
-        width: double.maxFinite,
-        color: Colors.redAccent,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: List.generate(
-                  _items.length,
-                  (index) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(14.0),
-                      height: 150,
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2.0,
-                          color: Colors.red,
+      body: StreamBuilder<QuerySnapshot>(
+        stream: Provider.of<AchievementModel>(context, listen: false).store,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.data!.docs.isNotEmpty) {
+            var data = snapshot.data?.docs
+                .map((e) => e.data()! as Map<String, dynamic>)
+                .toList();
+            print(data);
+
+            var lastDonation =
+                (data![0]['Last Donation Date'] as Timestamp).toDate();
+            var nextDonation = lastDonation.add(
+              Duration(days: 10),
+            );
+
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Column(
+                  children: [
+                    Card(
+                      child: Container(
+                        height: 100,
+                        width: 300,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Number Of Donations'.toUpperCase(),
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                            Text(
+                                data![0]['Number of Donations'] ??
+                                    '0'.toString(),
+                                style: TextStyle(fontSize: 26.0)),
+                          ],
                         ),
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.grey.withOpacity(0.4),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            _items[index]['title'].toString(),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          Text(
-                            _items[index]['value'].toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 34.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
                       ),
                     ),
-                  ),
-                )),
-          ),
-        ),
+                    Card(
+                      child: Container(
+                        height: 100,
+                        width: 300,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Last Donation Date'.toUpperCase(),
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                            Text(
+                                '${lastDonation.day} /${lastDonation.month}/ ${lastDonation.year}',
+                                style: TextStyle(fontSize: 26.0)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Card(
+                      child: Container(
+                        height: 100,
+                        width: 300,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Next Donation available'.toUpperCase(),
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                            Text(
+                                '${nextDonation.day} /${nextDonation.month}/ ${nextDonation.year}',
+                                style: TextStyle(fontSize: 26.0)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+          return Center(child: Text('An erro has occured'));
+        },
       ),
     );
   }

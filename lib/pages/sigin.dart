@@ -1,3 +1,4 @@
+import 'package:blood_bank_master/pages/authenticate.dart';
 import 'package:blood_bank_master/pages/reset_password.dart';
 import 'package:blood_bank_master/pages/signup.dart';
 import 'package:blood_bank_master/providers.dart';
@@ -67,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         TextFormField(
                           controller: passwordController,
+                          obscureText: true,
                           decoration: const InputDecoration(
                             label: Text('Password'),
                             hintText: 'Password',
@@ -97,7 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 12.0),
                               child: GestureDetector(
-                                onTap: () => Navigator.of(context).push(
+                                onTap: () =>
+                                    Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (context) => const RegisterPage(),
                                   ),
@@ -116,13 +119,15 @@ class _LoginPageState extends State<LoginPage> {
                               height: 40.0,
                               color: Colors.deepPurple,
                               onPressed: () {
-                                Provider.of<AuthUserModel>(context)
-                                    .loginWithEmailAndPassword(
-                                        emailController.text.trim(),
-                                        passwordController.text.trim());
-                                Navigator.of(context).push(
+                                Provider.of<AuthUserModel>(
+                                  context,
+                                  listen: false,
+                                ).loginWithEmailAndPassword(
+                                    emailController.text.trim(),
+                                    passwordController.text.trim());
+                                Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (context) => const HomePage(),
+                                    builder: (context) => const AuthWrapper(),
                                   ),
                                 );
                               },

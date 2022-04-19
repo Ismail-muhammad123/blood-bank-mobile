@@ -1,6 +1,8 @@
-import 'package:blood_bank_master/pages/profile.dart';
+import 'package:blood_bank_master/pages/authenticate.dart';
 import 'package:blood_bank_master/pages/sigin.dart';
 import 'package:blood_bank_master/providers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Sign in',
+                        'Sign up',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 40.0,
@@ -77,7 +79,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: GestureDetector(
-                              onTap: () => Navigator.of(context).push(
+                              onTap: () =>
+                                  Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                   builder: (context) => const LoginPage(),
                                 ),
@@ -95,10 +98,15 @@ class _RegisterPageState extends State<RegisterPage> {
                             height: 40.0,
                             color: Colors.deepPurple,
                             onPressed: () {
-                              Provider.of<AuthUserModel>(context)
+                              Provider.of<AuthUserModel>(context, listen: false)
                                   .registerUserWithEmailAndPassword(
                                 _emailController.text.trim(),
                                 _passwordController.text.trim(),
+                              );
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => AuthWrapper(),
+                                ),
                               );
                             },
                             child: const Text(

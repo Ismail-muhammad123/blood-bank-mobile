@@ -1,58 +1,114 @@
+import 'package:blood_bank_master/pages/authenticate.dart';
 import 'package:blood_bank_master/pages/donors.dart';
 import 'package:blood_bank_master/pages/home.dart';
-import 'package:blood_bank_master/pages/profile.dart';
-import 'package:blood_bank_master/pages/sigin.dart';
+import 'package:blood_bank_master/pages/reciepients.dart';
+import 'package:blood_bank_master/pages/request_blood.dart';
+import 'package:blood_bank_master/pages/splash_screen.dart';
+import 'package:blood_bank_master/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/about.dart';
 import 'pages/faq.dart';
 
 class DonorCard extends StatelessWidget {
+  final String name, address, number, group, uid;
+  final int quantity;
   const DonorCard({
     Key? key,
+    required this.name,
+    required this.address,
+    required this.number,
+    required this.group,
+    required this.uid,
+    required this.quantity,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 70,
-            width: 70,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(35),
-            ),
-          ),
-          Column(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: EdgeInsets.all(6.0),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Name: Abdul khalek',
+                'Name: $name',
                 style: TextStyle(fontSize: 18.0),
               ),
               Text(
-                'Contact: 3456789087654',
+                'Contact: $number',
                 style: TextStyle(fontSize: 18.0),
               ),
               Text(
-                'Address: Tangail',
+                'Address: $address',
                 style: TextStyle(fontSize: 18.0),
               ),
               Text(
-                'Total Donations: 1 time',
+                'Blood Group: $group',
                 style: TextStyle(fontSize: 18.0),
               ),
               Text(
-                'Last Donation: 23/10/2018',
+                'Quantity (bags): ${quantity.toString()}',
                 style: TextStyle(fontSize: 18.0),
               ),
             ],
           ),
-        ],
+        ),
+      ),
+    );
+  }
+}
+
+class ReciepientCard extends StatelessWidget {
+  final String name, address, number, group;
+  final int quantity;
+  const ReciepientCard({
+    Key? key,
+    required this.name,
+    required this.address,
+    required this.number,
+    required this.group,
+    required this.quantity,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: EdgeInsets.all(6.0),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Name: $name',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                'Contact: $number',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                'Address: $address',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                'Blood Group: $group',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                'Quantity needed (bags): ${quantity.toString()}',
+                style: TextStyle(fontSize: 18.0),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -96,16 +152,11 @@ class HomeDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const ProfilePage(),
-              ),
-            ),
             leading: const Icon(
               Icons.person,
             ),
-            title: Text('Abdul Khalek'),
-            subtitle: Text('khalek191@gmail.com'),
+            title: Text(
+                Provider.of<AuthUserModel>(context).userEmail ?? 'User Email'),
           ),
           Expanded(
             child: ListView(
@@ -127,11 +178,16 @@ class HomeDrawer extends StatelessWidget {
                     ),
                   ),
                   leading: Icon(Icons.bloodtype),
-                  title: Text('Find Blood Donor'),
+                  title: Text('Blood Donors'),
                 ),
                 ListTile(
-                  leading: Icon(Icons.location_city),
-                  title: Text('Nearest Hospitals'),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ReciepientsPage(),
+                    ),
+                  ),
+                  leading: Icon(Icons.bloodtype),
+                  title: Text('Recipient Requests'),
                 ),
                 ListTile(
                   onTap: () => Navigator.of(context).push(
@@ -152,11 +208,17 @@ class HomeDrawer extends StatelessWidget {
                   title: Text('Frequently Asked Questions'),
                 ),
                 ListTile(
-                  onTap: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ),
-                  ),
+                  onTap: () {
+                    Provider.of<AuthUserModel>(context, listen: false)
+                        .credentials
+                        .signOut();
+                    Navigator.of(context)
+                      ..pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => SplashScreen(),
+                          ),
+                          (route) => false);
+                  },
                   leading: Icon(Icons.logout),
                   title: Text('Log Out'),
                 ),

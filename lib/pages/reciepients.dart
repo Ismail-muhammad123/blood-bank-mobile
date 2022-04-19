@@ -1,3 +1,4 @@
+import 'package:blood_bank_master/pages/request_blood.dart';
 import 'package:blood_bank_master/pages/search_donor.dart';
 import 'package:blood_bank_master/providers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,14 +8,14 @@ import 'package:provider/provider.dart';
 import '../widgets.dart';
 import 'donate_blood.dart';
 
-class DonorSPage extends StatefulWidget {
-  const DonorSPage({Key? key}) : super(key: key);
+class ReciepientsPage extends StatefulWidget {
+  const ReciepientsPage({Key? key}) : super(key: key);
 
   @override
-  State<DonorSPage> createState() => _DonorSPageState();
+  State<ReciepientsPage> createState() => _ReciepientsPageState();
 }
 
-class _DonorSPageState extends State<DonorSPage> {
+class _ReciepientsPageState extends State<ReciepientsPage> {
   Future<bool> _refresh() async =>
       await Future.delayed(Duration(seconds: 5), () => true);
 
@@ -25,18 +26,19 @@ class _DonorSPageState extends State<DonorSPage> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const FindDonorPage(),
-              ),
-            ),
+            // onPressed: () => Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (context) => const RequestBloodFormPage(),
+            //   ),
+            // ),
+            onPressed: () {},
             icon: Icon(
               Icons.search,
             ),
           )
         ],
         backgroundColor: Colors.red,
-        title: Text('Blood Requests'),
+        title: Text('Blood Reciepients'),
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -44,7 +46,7 @@ class _DonorSPageState extends State<DonorSPage> {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => const DonateBloodFormPage(),
+              builder: (context) => const RequestBloodFormPage(),
             ),
           );
         },
@@ -57,16 +59,16 @@ class _DonorSPageState extends State<DonorSPage> {
         strokeWidth: 3.0,
         onRefresh: _refresh,
         child: StreamBuilder<QuerySnapshot>(
-            stream: Provider.of<DonorModel>(context).donors,
+            stream: Provider.of<ReciepientModel>(context).reciepients,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+              // if (snapshot.connectionState != ConnectionState.waiting) {
+              //   return Center(
+              //     child: CircularProgressIndicator(),
+              //   );
+              // }
               if (!snapshot.hasData) {
                 return Center(
-                  child: Text('No Reciepients Available'),
+                  child: Text('No Donors Available'),
                 );
               }
               return ListView(
@@ -78,7 +80,7 @@ class _DonorSPageState extends State<DonorSPage> {
                     number: data['contact number'],
                     address: data['address'],
                     group: data['blood group'],
-                    quantity: data['Quantity needed (bags)'] ?? 0,
+                    quantity: data['quantity needed (bags)'] ?? 0,
                   );
                 }).toList(),
               );

@@ -136,12 +136,7 @@ class _FindDonorPageState extends State<FindDonorPage> {
             Divider(),
             Expanded(
               child: ListView(
-                children: [
-                  DonorCard(),
-                  Divider(),
-                  DonorCard(),
-                  Divider(),
-                ],
+                children: [],
               ),
             )
           ],

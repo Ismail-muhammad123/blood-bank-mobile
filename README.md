@@ -20,10 +20,10 @@ samples, guidance on mobile development, and a full API reference.
     - sign in
     - sign up
     - reset password
-    - user profile
     - Donation history
     - Donors list
-    - search donor
-    - Hospitals
+    - Donation Page
+    - Reciepients List
+    - Add Request page
     - about the app
     - frequently asked questions

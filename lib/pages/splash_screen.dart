@@ -1,3 +1,4 @@
+import 'package:blood_bank_master/pages/authenticate.dart';
 import 'package:blood_bank_master/pages/sigin.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 5),
       () => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const LoginPage(),
+          builder: (context) => const AuthWrapper(),
         ),
       ),
     );
