@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                               style: TextStyle(fontSize: 18.0),
                             ),
                             Text(
-                                data![0]['Number of Donations'] ??
+                                data[0]['Number of Donations'] ??
                                     '0'.toString(),
                                 style: TextStyle(fontSize: 26.0)),
                           ],
