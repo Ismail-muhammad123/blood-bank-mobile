@@ -184,7 +184,7 @@ class HomeDrawer extends StatelessWidget {
                 ListTile(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const DonorSPage(),
+                      builder: (context) => const DonateBloodFormPage(),
                     ),
                   ),
                   leading: Icon(Icons.add),
@@ -193,7 +193,7 @@ class HomeDrawer extends StatelessWidget {
                 ListTile(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const DonateBloodFormPage(),
+                      builder: (context) => const ReciepientsPage(),
                     ),
                   ),
                   leading: Icon(Icons.bloodtype),
@@ -202,11 +202,11 @@ class HomeDrawer extends StatelessWidget {
                 ListTile(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const DonateBloodFormPage(),
+                      builder: (context) => const RequestBloodFormPage(),
                     ),
                   ),
                   leading: Icon(Icons.add),
-                  title: Text('Add Request'),
+                  title: Text('Request Blood'),
                 ),
                 ListTile(
                   onTap: () => Navigator.of(context).push(
