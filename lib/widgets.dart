@@ -1,4 +1,5 @@
 import 'package:blood_bank_master/pages/authenticate.dart';
+import 'package:blood_bank_master/pages/donate_blood.dart';
 import 'package:blood_bank_master/pages/donors.dart';
 import 'package:blood_bank_master/pages/home.dart';
 import 'package:blood_bank_master/pages/reciepients.dart';
@@ -183,11 +184,29 @@ class HomeDrawer extends StatelessWidget {
                 ListTile(
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const ReciepientsPage(),
+                      builder: (context) => const DonorSPage(),
+                    ),
+                  ),
+                  leading: Icon(Icons.add),
+                  title: Text('Donate Blood'),
+                ),
+                ListTile(
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const DonateBloodFormPage(),
                     ),
                   ),
                   leading: Icon(Icons.bloodtype),
                   title: Text('Recipient Requests'),
+                ),
+                ListTile(
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const DonateBloodFormPage(),
+                    ),
+                  ),
+                  leading: Icon(Icons.add),
+                  title: Text('Add Request'),
                 ),
                 ListTile(
                   onTap: () => Navigator.of(context).push(

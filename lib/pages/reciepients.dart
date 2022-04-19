@@ -24,19 +24,6 @@ class _ReciepientsPageState extends State<ReciepientsPage> {
     return Scaffold(
       backgroundColor: Colors.redAccent,
       appBar: AppBar(
-        actions: [
-          IconButton(
-            // onPressed: () => Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => const RequestBloodFormPage(),
-            //   ),
-            // ),
-            onPressed: () {},
-            icon: Icon(
-              Icons.search,
-            ),
-          )
-        ],
         backgroundColor: Colors.red,
         title: Text('Blood Reciepients'),
         centerTitle: true,
@@ -68,7 +55,7 @@ class _ReciepientsPageState extends State<ReciepientsPage> {
               // }
               if (!snapshot.hasData) {
                 return Center(
-                  child: Text('No Donors Available'),
+                  child: Text('No Recipients Found'),
                 );
               }
               return ListView(

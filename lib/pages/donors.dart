@@ -23,20 +23,8 @@ class _DonorSPageState extends State<DonorSPage> {
     return Scaffold(
       backgroundColor: Colors.redAccent,
       appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const FindDonorPage(),
-              ),
-            ),
-            icon: Icon(
-              Icons.search,
-            ),
-          )
-        ],
         backgroundColor: Colors.red,
-        title: Text('Blood Requests'),
+        title: Text('Blood Donors'),
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -48,7 +36,7 @@ class _DonorSPageState extends State<DonorSPage> {
             ),
           );
         },
-        label: Text('Add Request'),
+        label: Text('Donate'),
         backgroundColor: Colors.red,
       ),
       body: RefreshIndicator(
@@ -57,20 +45,21 @@ class _DonorSPageState extends State<DonorSPage> {
         strokeWidth: 3.0,
         onRefresh: _refresh,
         child: StreamBuilder<QuerySnapshot>(
-            stream: Provider.of<DonorModel>(context).donors,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (!snapshot.hasData) {
-                return Center(
-                  child: Text('No Reciepients Available'),
-                );
-              }
-              return ListView(
-                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+          stream: Provider.of<DonorModel>(context).donors,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (!snapshot.hasData) {
+              return Center(
+                child: Text('No Donors Available'),
+              );
+            }
+            return ListView(
+              children: snapshot.data!.docs.map(
+                (DocumentSnapshot document) {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
                   return ReciepientCard(
@@ -80,9 +69,11 @@ class _DonorSPageState extends State<DonorSPage> {
                     group: data['blood group'],
                     quantity: data['Quantity needed (bags)'] ?? 0,
                   );
-                }).toList(),
-              );
-            }),
+                },
+              ).toList(),
+            );
+          },
+        ),
       ),
     );
   }
