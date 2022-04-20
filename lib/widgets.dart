@@ -13,7 +13,7 @@ import 'pages/about.dart';
 import 'pages/faq.dart';
 
 class DonorCard extends StatelessWidget {
-  final String name, address, number, group, uid;
+  final String name, address, number, group;
   final int quantity;
   const DonorCard({
     Key? key,
@@ -21,7 +21,6 @@ class DonorCard extends StatelessWidget {
     required this.address,
     required this.number,
     required this.group,
-    required this.uid,
     required this.quantity,
   }) : super(key: key);
 

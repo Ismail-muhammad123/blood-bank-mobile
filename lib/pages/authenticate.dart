@@ -1,5 +1,6 @@
 import 'package:blood_bank_master/pages/home.dart';
 import 'package:blood_bank_master/pages/sigin.dart';
+import 'package:blood_bank_master/pages/splash_screen.dart';
 import 'package:blood_bank_master/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,7 +26,7 @@ class AuthWrapperState extends State<AuthWrapper> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(
-              child: CircularProgressIndicator(),
+              child: SplashScreen(),
             ),
           );
         }

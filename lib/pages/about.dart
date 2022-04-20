@@ -28,7 +28,7 @@ class AboutPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                    'This is a Moble app built to connect blood donors and recipients. The purpose of the app is to simplify the process of communication between donors and thos who need blood transfussion and to make fining donors easier.',
                     style: TextStyle(
                       fontSize: 18,
                       fontStyle: FontStyle.italic,
@@ -46,7 +46,7 @@ class AboutPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                    'To donate blood through this app, to to the "Donate" page and enter the relevant information and the quantity you are willing to donate. You can also go to the "Reciepients" page and select the reciepient, then you can contact them and donate to them.\n\n If You need blood as a reciepient, go to "Donors Page" to find donors and contact them or go to "Request Blood" page and enter your information so that a donor will contact you.',
                     style: TextStyle(
                       fontSize: 18,
                       fontStyle: FontStyle.italic,

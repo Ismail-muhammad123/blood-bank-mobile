@@ -30,14 +30,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ReciepientModel>(
           create: (_) => ReciepientModel(),
         ),
-        ChangeNotifierProvider<AchievementModel>(
-          create: (_) => AchievementModel(),
-        )
+     
       ],
       child: MaterialApp(
         routes: {
-          '/': (context) => const SplashScreen(),
-          '/auth': (context) => const AuthWrapper(),
+          '/': (context) => const AuthWrapper(),
         },
         initialRoute: '/',
         debugShowCheckedModeBanner: false,

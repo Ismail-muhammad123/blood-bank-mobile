@@ -46,8 +46,10 @@ class AuthUserModel with ChangeNotifier {
 
 class DonorModel with ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Stream<QuerySnapshot> get donors =>
-      _firestore.collection('donors').snapshots();
+  Stream<QuerySnapshot> get donors => _firestore
+      .collection('donors')
+      .orderBy('date', descending: true)
+      .snapshots();
 
   addDonor(
     String group,
@@ -62,8 +64,9 @@ class DonorModel with ChangeNotifier {
       'contact number': phone,
       'address': address,
       'quantity(bags)': quantity,
-      'Uid': uid,
+      'uid': uid,
       'blood group': group,
+      'date': DateTime.now(),
     });
     notifyListeners();
   }
@@ -87,12 +90,8 @@ class ReciepientModel with ChangeNotifier {
       'address': address,
       'quantity needed (bags)': quantity,
       'blood group': group,
+      'time': DateTime.now(),
     });
     notifyListeners();
   }
-}
-
-class AchievementModel with ChangeNotifier {
-  final store =
-      FirebaseFirestore.instance.collection('achievements').snapshots();
 }

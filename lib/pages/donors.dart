@@ -62,12 +62,12 @@ class _DonorSPageState extends State<DonorSPage> {
                 (DocumentSnapshot document) {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
-                  return ReciepientCard(
+                  return DonorCard(
                     name: data['name'],
                     number: data['contact number'],
                     address: data['address'],
                     group: data['blood group'],
-                    quantity: data['Quantity needed (bags)'] ?? 0,
+                    quantity: data['quantity(bags)'] ?? 0,
                   );
                 },
               ).toList(),
